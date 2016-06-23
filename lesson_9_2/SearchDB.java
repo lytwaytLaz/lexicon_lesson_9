@@ -14,14 +14,16 @@ public class SearchDB {
             System.err.println("usage: java SearchDB <word>");
             System.exit(1);
         }
-
+        String searchKey = args[0];
         String url = "jdbc:derby:thesaurus";
         try (Connection con = DriverManager.getConnection(url))
         {
             try (Statement stmt = con.createStatement())
             {
-                ResultSet rs = stmt.executeQuery("SELECT '" + args[0] + "' FROM THESAURUS");
-                System.out.println(rs.getString("SEARCHKEY") + ":\n" + rs.getString("SYNONYMS") );
+                ResultSet rs = stmt.executeQuery("SELECT * FROM THESAURUS WHERE SEARCHKEY = '" + searchKey + "'");
+//                System.out.println("SELECT * FROM THESAURUS WHERE SEARCHKEY = '" + searchKey + "'");
+                rs.next();
+                System.out.println("Synonymer till " + rs.getString("SEARCHKEY") + ":\n" + rs.getString("SYNONYMS") );
             }
         }
         catch (SQLException sqlex)

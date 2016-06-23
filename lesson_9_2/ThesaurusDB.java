@@ -10,6 +10,8 @@ import java.sql.*;
  * @version 1.0
  * @since 2016-06-22
  */
+
+
 public class ThesaurusDB
 {
     public static void main(String[] args) throws IOException {
@@ -19,7 +21,7 @@ public class ThesaurusDB
         {
             try (Statement stmt = con.createStatement())
             {
-                String sql = "CREATE TABLE THESAURUS(SEARCHKEY VARCHAR(40), SYNONYMS VARCHAR(1000))";
+                String sql = "CREATE TABLE THESAURUS(SEARCHKEY VARCHAR(40), SYNONYMS VARCHAR(10000))";
                 stmt.executeUpdate(sql);
 
                 for (String line : Files.readAllLines(Paths.get("thesaurus-sv_utf8.txt")))
@@ -27,6 +29,7 @@ public class ThesaurusDB
                     String searchkey = line.substring(0, line.indexOf(":"));
                     String synonyms = line.substring(line.indexOf(":") + 1);
                     sql = "INSERT INTO THESAURUS VALUES('" + searchkey + "','" + synonyms + "')";
+                    System.out.println("INSERT INTO THESAURUS VALUES('" + searchkey + "','" + synonyms + "')");
                     stmt.executeUpdate(sql);
                 }
             }
