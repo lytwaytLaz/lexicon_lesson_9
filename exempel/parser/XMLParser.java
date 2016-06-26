@@ -10,6 +10,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.events.Attribute;
 
 public final class XMLParser implements DefinitionsParser {
 
@@ -26,17 +27,12 @@ public final class XMLParser implements DefinitionsParser {
 
       String text = null;
       Set<String> synonyms = null;
-//      Comparator<Double> comp = new Comparator<>();
 
 
       while (reader.hasNext()) {
         final int event = reader.next();
         switch (event) {
-          case XMLStreamConstants.ATTRIBUTE:
-          {
-            if (reader.getAttributeValue(null, "level"))
-              System.out.println("Cool bro'");
-          }
+
         case XMLStreamConstants.END_ELEMENT: {
           if ("w1".equals(reader.getLocalName())) {
             if (text == null)
@@ -56,6 +52,12 @@ public final class XMLParser implements DefinitionsParser {
               throw new RuntimeException("Invalid record: definiens lacks definiendum.");
 
             synonyms.add(text);
+//            Iterator<Attribute> attributes = reader.getAttributeValue(null, "level");
+//            String level = attributes.next().getValue();
+//            Attribute idAttr = startElement.getAttributeByName(new QName("id"));
+//            if(idAttr != null){
+//              emp.setId(Integer.parseInt(idAttr.getValue()));
+//            }
           }
           break;
         }
