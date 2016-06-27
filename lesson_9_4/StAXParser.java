@@ -1,7 +1,6 @@
 package lesson_9_4;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -31,16 +30,16 @@ class StAXParser
     String searchKey;
     String synonymValue;
 
-    public StAXParser()
-    {
+    public StAXParser() throws UnsupportedEncodingException {
         String url = "jdbc:derby:thesaurusXML;create=true";
         try (Connection con = DriverManager.getConnection(url);
              Statement stmt = con.createStatement())
         {
             String sql = "CREATE TABLE THESAURUSXML(LEVEL VARCHAR(8), SEARCHKEY VARCHAR(40), SYNONYMS VARCHAR(10000))";
             stmt.executeUpdate(sql);
-            XMLInputFactory factory = XMLInputFactory.newInstance();
-            XMLEventReader eventReader = factory.createXMLEventReader(new FileReader("thesaurus-sv.xml"));
+            //newFactory replaces the earlier now deprecated newInstance
+            XMLInputFactory factory = XMLInputFactory.newFactory();
+            XMLEventReader eventReader = factory.createXMLEventReader(new InputStreamReader((new FileInputStream("thesaurus-sv.xml")), "ISO-8859-1"));
 
             while (eventReader.hasNext())
             {
@@ -54,7 +53,7 @@ class StAXParser
                         {
                             Iterator<Attribute> attributes = startElement.getAttributes();
                             level = attributes.next().getValue();
-                            System.out.print(level);
+//                            System.out.print(level);
                         } else if (qName.equalsIgnoreCase("w1"))
                         {
                             key = true;
@@ -70,7 +69,7 @@ class StAXParser
                         {
                             searchKey = characters.getData();
                             key = false;
-                            System.out.print(": " + key);
+//                            System.out.print(": " + key);
                         } else if (synonym)
                         {
                             synonymValue = characters.getData();
@@ -79,7 +78,7 @@ class StAXParser
                                     "')";
                             stmt.executeUpdate(sql);
                             synonym = false;
-                            System.out.println(" " + synonymValue);
+//                            System.out.println(" " + synonymValue);
                         }
                         break;
 
@@ -116,8 +115,7 @@ class StAXParser
 
 
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws UnsupportedEncodingException {
         StAXParser parser = new StAXParser();
     }
 }
