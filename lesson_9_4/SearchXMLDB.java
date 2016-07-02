@@ -24,7 +24,9 @@ public class SearchXMLDB {
 //                System.out.println("SELECT * FROM THESAURUSXML WHERE SEARCHKEY = '" + searchKey + "' ORDER BY LEVEL DESC");
                 System.out.println("Synonymer i betydelseordning till " + searchKey + ":");
                 while (rs.next())
+                {
                     System.out.print(rs.getString("SYNONYMS") + ", ");
+                }
             }
 
         }
