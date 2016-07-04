@@ -39,7 +39,7 @@ class StAXParser
             stmt.executeUpdate(sql);
             //newFactory replaces the earlier now deprecated newInstance
             XMLInputFactory factory = XMLInputFactory.newFactory();
-            XMLEventReader eventReader = factory.createXMLEventReader(new InputStreamReader((new FileInputStream("thesaurus-sv.xml")), "ISO-8859-1"));
+            XMLEventReader eventReader = factory.createXMLEventReader((new FileInputStream("thesaurus-sv.xml")));
 
             while (eventReader.hasNext())
             {
