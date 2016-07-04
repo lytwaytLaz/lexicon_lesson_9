@@ -74,8 +74,7 @@ class StAXParser
                         {
                             synonymValue = characters.getData();
                             sql = "INSERT INTO THESAURUSXML VALUES('" + level + "','" + searchKey + "','" +
-                                    synonymValue +
-                                    "')";
+                                    synonymValue + "')";
                             stmt.executeUpdate(sql);
                             synonym = false;
 //                            System.out.println(" " + synonymValue);
