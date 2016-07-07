@@ -57,6 +57,7 @@ public class StAXMyWay
                     }
                 }
             }
+
         } catch (FileNotFoundException e)
         {
             e.printStackTrace();
