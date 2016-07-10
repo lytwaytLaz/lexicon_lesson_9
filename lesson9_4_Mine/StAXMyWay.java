@@ -40,15 +40,15 @@ public class StAXMyWay
                     String eventName = streamReader.getLocalName();
                     if ("syn".equals(eventName))
                     {
-                        level = streamReader.getAttributeValue(null, "level");
+                        level = streamReader.getAttributeValue(null, "level").trim();
                     } else if ("w1".equals(eventName))
                     {
                         streamReader.next();
-                        key = streamReader.getText();
+                        key = streamReader.getText().trim();
                     } else if ("w2".equals(eventName))
                     {
                         streamReader.next();
-                        synonyms = streamReader.getText();
+                        synonyms = streamReader.getText().trim();
                         sql = "INSERT INTO THESAURUSXML VALUES('" + level + "','" + key + "','" + synonyms +
                                 "')";
                         stmt.executeUpdate(sql);
