@@ -3,6 +3,8 @@ package lesson9_4_Mine;
 import javax.xml.stream.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +18,7 @@ import java.sql.Statement;
 public class StAXMyWay
 {
 
-    public static void main(String[] args) throws FileNotFoundException, XMLStreamException
+    public static void main(String[] args) throws FileNotFoundException, XMLStreamException, UnsupportedEncodingException
     {
         String level = null;
         String key = null;
@@ -30,7 +32,7 @@ public class StAXMyWay
             stmt.executeUpdate(sql);
 
             XMLInputFactory factory = XMLInputFactory.newFactory();
-            XMLStreamReader streamReader = factory.createXMLStreamReader(new FileInputStream("thesaurus-sv.xml"));
+            XMLStreamReader streamReader = factory.createXMLStreamReader(new InputStreamReader((new FileInputStream("thesaurus-sv.xml")), "ISO-8859-1"));
 
             while (streamReader.hasNext())
             {
@@ -55,6 +57,7 @@ public class StAXMyWay
                     }
                 }
             }
+
         } catch (FileNotFoundException e)
         {
             e.printStackTrace();
